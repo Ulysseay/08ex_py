@@ -20,4 +20,5 @@ Script pour additionner deux matrices avec les mêmes dimensions.
 1. Placez vos matrices dans des fichiers texte nommés `matrice1.txt` et `matrice2.txt`, dans le même répertoire que le script.
 2. Chaque ligne des fichiers représente une ligne de la matrice et les éléments de chaque ligne doivent être séparés par des espaces.
 3. Exécutez le script en utilisant la commande :
+   python addition_matrices.py
 
