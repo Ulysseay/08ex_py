@@ -1,41 +1,42 @@
 
-
 def lire_matrice(fichier_matrice):
-    """Lit une matrice à partir d'un fichier texte."""
+    """Reads a matrix from a text file."""
     try:
-        with open(fichier_matrice, 'r') as fichier:
-            matrice = [list(map(int, ligne.strip().split())) for ligne in fichier]
-        return matrice
+        with open(fichier_matrice, 'r') as file:
+            matrix = [list(map(int, line.strip().split())) for line in file]
+        return matrix
     except FileNotFoundError:
-        print(f"Erreur : Le fichier {fichier_matrice} n'a pas été trouvé.")
+        print(f"Error: File {fichier_matrice} not found.")
         return None
     except ValueError:
-        print(f"Erreur : Le fichier {fichier_matrice} contient des données invalides.")
+        print(f"Error: File {fichier_matrice} contains invalid data.")
         return None
+
 def additionner_matrices(matrice1, matrice2):
-    """Additionne deux matrices de mêmes dimensions."""
-    if len(matrice1) != len(matrice2) or any(len(ligne1) != len(ligne2) for ligne1, ligne2 in zip(matrice1, matrice2)):
-        print("Erreur : Les matrices doivent avoir les mêmes dimensions.")
+    """Adds two matrices of the same dimensions."""
+    if len(matrice1) != len(matrice2) or any(len(row1) != len(row2) for row1, row2 in zip(matrice1, matrice2)):
+        print("Error: Matrices must have the same dimensions.")
         return None
     return [[matrice1[i][j] + matrice2[i][j] for j in range(len(matrice1[0]))] for i in range(len(matrice1))]
 
 def afficher_matrice(matrice):
-    """Affiche une matrice."""
+    """Displays a matrix."""
     if matrice:
-        for ligne in matrice:
-            print(" ".join(map(str, ligne)))
+        for row in matrice:
+            print(" ".join(map(str, row)))
 
 if __name__ == "__main__":
-    # Lire les matrices à partir des fichiers
+    # Read the matrices from the files
     matrice1 = lire_matrice('matrice1.txt')
     matrice2 = lire_matrice('matrice2.txt')
 
     if matrice1 and matrice2:
-        # Additionner les matrices
-        resultat = additionner_matrices(matrice1, matrice2)
+        # Add the matrices
+        result = additionner_matrices(matrice1, matrice2)
 
-        # Afficher le résultat
-        if resultat:
-            print("Résultat de l'addition des matrices :")
-            afficher_matrice(resultat)    
+        # Display the result
+        if result:
+            print("Result of the matrix addition:")
+            afficher_matrice(result)
+
 
