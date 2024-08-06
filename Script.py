@@ -1,69 +1,41 @@
 
 
-import numpy as np
-
-def add_matrices(matrix1, matrix2):
+def lire_matrice(fichier_matrice):
+    """Lit une matrice à partir d'un fichier texte."""
     try:
-        # Convertion des listes en matrices numpy
-        mat1 = np.array(matrix1)
-        mat2 = np.array(matrix2)
-        
-        # Vérificationde la compatibilité  pour l'addition
-        if mat1.shape != mat2.shape:
-            raise ValueError("Les matrices doivent avoir les mêmes dimensions pour être additionnées")
-        
-        # Additionn des matrices
-        result = mat1 + mat2
-        return result
-    except Exception as e:
-        return str(e)
+        with open(fichier_matrice, 'r') as fichier:
+            matrice = [list(map(int, ligne.strip().split())) for ligne in fichier]
+        return matrice
+    except FileNotFoundError:
+        print(f"Erreur : Le fichier {fichier_matrice} n'a pas été trouvé.")
+        return None
+    except ValueError:
+        print(f"Erreur : Le fichier {fichier_matrice} contient des données invalides.")
+        return None
+def additionner_matrices(matrice1, matrice2):
+    """Additionne deux matrices de mêmes dimensions."""
+    if len(matrice1) != len(matrice2) or any(len(ligne1) != len(ligne2) for ligne1, ligne2 in zip(matrice1, matrice2)):
+        print("Erreur : Les matrices doivent avoir les mêmes dimensions.")
+        return None
+    return [[matrice1[i][j] + matrice2[i][j] for j in range(len(matrice1[0]))] for i in range(len(matrice1))]
 
-import tkinter as tk
-from tkinter import messagebox
-import numpy as np
-
-def add_matrices_gui():
-    def on_add():
-        try:
-            matrix1 = eval(entry_matrix1.get())
-            matrix2 = eval(entry_matrix2.get())
-            result = add_matrices(matrix1, matrix2)
-            result_label.config(text=f"Résultat: {result}")
-        except Exception as e:
-            messagebox.showerror("Erreur", str(e))
-    
-    def add_matrices(matrix1, matrix2):
-        try:
-            mat1 = np.array(matrix1)
-            mat2 = np.array(matrix2)
-            if mat1.shape != mat2.shape:
-                raise ValueError("Les matrices doivent avoir les mêmes dimensions pour être additionnées")
-            result = mat1 + mat2
-            return result
-        except Exception as e:
-            return str(e)
-
-    root = tk.Tk()
-    root.title("Additionneur de Matrices")
-    
-    tk.Label(root, text="Matrice 1 (ex: [[1, 2], [3, 4]]):").pack()
-    entry_matrix1 = tk.Entry(root, width=50)
-    entry_matrix1.pack()
-
-    tk.Label(root, text="Matrice 2 (ex: [[5, 6], [7, 8]]):").pack()
-    entry_matrix2 = tk.Entry(root, width=50)
-    entry_matrix2.pack()
-
-    add_button = tk.Button(root, text="Additionner", command=on_add)
-    add_button.pack()
-
-    result_label = tk.Label(root, text="Résultat: ")
-    result_label.pack()
-
-    root.mainloop()
+def afficher_matrice(matrice):
+    """Affiche une matrice."""
+    if matrice:
+        for ligne in matrice:
+            print(" ".join(map(str, ligne)))
 
 if __name__ == "__main__":
-    add_matrices_gui()
+    # Lire les matrices à partir des fichiers
+    matrice1 = lire_matrice('matrice1.txt')
+    matrice2 = lire_matrice('matrice2.txt')
 
+    if matrice1 and matrice2:
+        # Additionner les matrices
+        resultat = additionner_matrices(matrice1, matrice2)
 
+        # Afficher le résultat
+        if resultat:
+            print("Résultat de l'addition des matrices :")
+            afficher_matrice(resultat)    
 
