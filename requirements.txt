@@ -1,1 +1,1 @@
-# Aucune dépendance externe requise pour ce script.
+# No external dependencies required for this script.
